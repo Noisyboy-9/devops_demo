@@ -58,7 +58,6 @@ jobs:
       - name: connect and pull
         run: | 
           ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "
-          docker login -u {{ secrets.DOCKERHUB_USERNAME }} -p {{ secrets.DOCKERHUB_PASSWORD }} && \ 
-          docker ps -aq | xargs docker stop | xargs docker rm &&
-          docker image pull noisyboy9/devops-demo:latest &&
-          docker container run noisyboy9/devops-demo -p 80:8080"
+          sudo docker login && 
+          sudo docker image pull noisyboy9/devops-demo:latest &&
+          sudo docker container run noisyboy9/devops-demo -p 80:8080"
