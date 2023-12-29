@@ -45,3 +45,20 @@ jobs:
         with:
           push: true
           tags: noisyboy9/devops-demo:latest
+
+  deploy: 
+    needs: push
+    runs-on: "ubuntu-latest"
+    steps:
+      - name: install ssh keys
+        run: |
+          install -m 600 -D /dev/null ~/.ssh/id_rsa
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.SSH_HOST }} > ~/.ssh/known_hosts
+      - name: connect and pull
+        run: | 
+          ssh -o StrictHostKeyChecking=no -i ${{ secrets.SSH_KEY }} ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "
+          docker login -u {{ secrets.DOCKERHUB_USERNAME }} -p {{ secrets.DOCKERHUB_PASSWORD }} && \ 
+          docker ps -aq | xargs docker stop | xargs docker rm &&
+          docker image pull noisyboy9/devops-demo:latest &&
+          docker container run noisyboy9/devops-demo -p 80:8080"
