@@ -60,4 +60,4 @@ jobs:
           ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "
           sudo docker login && 
           sudo docker image pull noisyboy9/devops-demo:latest &&
-          sudo docker container run noisyboy9/devops-demo -p 80:8080"
+          sudo docker container run -d -p 8080:8080 noisyboy9/devops-demo"
