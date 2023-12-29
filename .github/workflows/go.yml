@@ -57,7 +57,7 @@ jobs:
           ssh-keyscan -H ${{ secrets.SSH_HOST }} > ~/.ssh/known_hosts
       - name: connect and pull
         run: | 
-          ssh -o StrictHostKeyChecking=no -i ${{ secrets.SSH_KEY }} ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "
+          ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "
           docker login -u {{ secrets.DOCKERHUB_USERNAME }} -p {{ secrets.DOCKERHUB_PASSWORD }} && \ 
           docker ps -aq | xargs docker stop | xargs docker rm &&
           docker image pull noisyboy9/devops-demo:latest &&
