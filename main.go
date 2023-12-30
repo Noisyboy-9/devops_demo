@@ -26,7 +26,7 @@ func calculateFib(c echo.Context) error {
 	if err != nil {
 		panic(err)
 	}
-	return c.String(http.StatusOK, fmt.Sprintf("hello, result of fib(%s) = %v", inputStr, fib(n)))
+	return c.String(http.StatusOK, fmt.Sprintf("hello, my name is sina sharaiti and result of fib(%s) = %v", inputStr, fib(n)))
 }
 
 func main() {
